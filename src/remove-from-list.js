@@ -21,9 +21,26 @@ const { NotImplementedError } = require('../lib/errors');
  *   }
  * }
  */
-function removeKFromList(/* l, k */) {
-  // Remove line below and write your code here
-  throw new NotImplementedError('Not implemented');
+function removeKFromList(l, k) {
+  // создаём фиктивный (временный) узел перед началом списка
+  const dummy = { value: null, next: l };
+
+  // текущий узел (начинаем с dummy)
+  let current = dummy;
+
+  // пока есть следующий элемент
+  while (current.next) {
+    if (current.next.value === k) {
+      // если значение совпадает — "пропускаем" этот узел
+      current.next = current.next.next;
+    } else {
+      // иначе идём дальше
+      current = current.next;
+    }
+  }
+
+  // возвращаем "чистый" список, без dummy
+  return dummy.next;
 }
 
 module.exports = {

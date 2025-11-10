@@ -13,19 +13,44 @@ const { NotImplementedError } = require('../lib/errors');
  * queue.getUnderlyingList() // returns { value: 3, next: null }
  */
 class Queue {
+  constructor() {
+    this.head = null; // первый элемент (начало очереди)
+    this.tail = null; // последний элемент (конец очереди)
+  }
+
+  // вернуть весь список (нужен для проверки тестами)
   getUnderlyingList() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+    return this.head;
   }
 
-  enqueue(/* value */) {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+  // добавить элемент в конец очереди
+  enqueue(value) {
+    const newNode = { value: value, next: null };
+
+    if (!this.head) {
+      // если очередь пуста — новый узел становится и head, и tail
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      // иначе добавляем в конец
+      this.tail.next = newNode;
+      this.tail = newNode;
+    }
   }
 
+  // удалить элемент из начала очереди и вернуть его значение
   dequeue() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+    if (!this.head) return null; // очередь пуста
+
+    const value = this.head.value; // запоминаем значение
+    this.head = this.head.next;    // двигаем "голову" вперёд
+
+    if (!this.head) {
+      // если после удаления очередь опустела, сбрасываем хвост
+      this.tail = null;
+    }
+
+    return value;
   }
 }
 
